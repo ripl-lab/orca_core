@@ -1,5 +1,5 @@
 import argparse
-from orca_core import OrcaHand
+from orca_core import MockOrcaHand
 
 def main():
     parser = argparse.ArgumentParser(
@@ -14,9 +14,12 @@ def main():
     )
     args = parser.parse_args()
 
-    hand = OrcaHand(args.model_path)
+    hand = MockOrcaHand(args.model_path)
     status = hand.connect()
     print(status)
+
+    if status[0]:
+        print("Connected to the hand.")
 
     if not status[0]:
         print("Failed to connect to the hand.")

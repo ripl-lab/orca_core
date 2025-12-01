@@ -87,8 +87,8 @@ class MockDynamixelClient:
 
     def __init__(self,
                  motor_ids: Sequence[int],
-                 port: str = '/dev/ttyUSB0',
-                 baudrate: int = 1000000,
+                 port: str = '/dev/pts/10',
+                 baudrate: int = 57600,
                  lazy_connect: bool = False,
                  pos_scale: Optional[float] = None,
                  vel_scale: Optional[float] = None,
@@ -98,7 +98,7 @@ class MockDynamixelClient:
         Args:
             motor_ids: All motor IDs being used by the client.
             port: The Dynamixel device to talk to. e.g.
-                - Linux: /dev/ttyUSB0
+                - Linux: /dev/pts/10
                 - Mac: /dev/tty.usbserial-*
                 - Windows: COM1
             baudrate: The Dynamixel baudrate to communicate with.
@@ -494,10 +494,10 @@ if __name__ == '__main__':
     parser.add_argument(
         '-d',
         '--device',
-        default='/dev/cu.usbserial-FT62AFSR',
+        default='/dev/pts/10',
         help='The Dynamixel device to connect to.')
     parser.add_argument(
-        '-b', '--baud', default=1000000, help='The baudrate to connect with.')
+        '-b', '--baud', default=57600, help='The baudrate to connect with.')
     parsed_args = parser.parse_args()
     motors = [int(motor) for motor in parsed_args.motors.split(',')]
     
@@ -510,6 +510,7 @@ if __name__ == '__main__':
                 way_point = way_points[(step // 100) % len(way_points)]
                 print('Writing: {}'.format(way_point.tolist()))
                 dxl_client.write_desired_pos(motors, way_point)
+                # turning half a circle back and forth
             read_start = time.time()
             pos_now, vel_now, cur_now = dxl_client.read_pos_vel_cur()
             if step % 5 == 0:
