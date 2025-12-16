@@ -1,4 +1,4 @@
-port: dev/ttyUSB0
+port: /dev/ttyUSB0
 version: 0.2.1
 baudrate: 57600
 max_current: 400
@@ -18,8 +18,8 @@ motor_ids:
 # - 11
 # - 12
 # - 13
-# - 14
-# - 15
+- 14
+- 15
 - 16
 # - 17
 joint_ids:
@@ -27,8 +27,8 @@ joint_ids:
 # - thumb_abd
 # - thumb_pip
 # - thumb_dip
-# - index_abd
-# - index_mcp
+- index_abd
+- index_mcp
 - index_pip
 # - middle_abd
 # - middle_mcp
@@ -45,8 +45,8 @@ joint_to_motor_map:
   # thumb_abd: -3
   # thumb_pip: -1
   # thumb_dip: -2
-  # index_abd: 14
-  # index_mcp: -15
+  index_abd: 14
+  index_mcp: -15
   index_pip: -16
   # middle_abd: 13
   # middle_mcp: -8
@@ -71,12 +71,12 @@ joint_roms:
   # thumb_dip:
   # - -20
   # - 112
-  # index_abd:
-  # - -37
-  # - 37
-  # index_mcp:
-  # - -20
-  # - 95
+  index_abd:
+  - -37
+  - 37
+  index_mcp:
+  - -20
+  - 95
   index_pip:
   - -20
   - 108
@@ -110,14 +110,14 @@ joint_roms:
   # wrist:
   # - -50
   # - 30
-neutral_position:
+neutral_position: # changed from Orca's defaults to half-way points in ROMs
   # thumb_mcp: -13
   # thumb_abd: 43
   # thumb_pip: 33
   # thumb_dip: 19
-  # index_abd: 25
-  # index_mcp: 0
-  index_pip: 0
+  index_abd: 0
+  index_mcp: 58
+  index_pip: 64
   # middle_abd: -2
   # middle_mcp: 0
   # middle_pip: 0
@@ -137,8 +137,20 @@ calib_threshold: 0.01
 calib_sequence:
   - step: 1
     joints:
-      index_pip: flex
+      index_abd: flex
   - step: 2
+    joints:
+      index_abd: extend
+  - step: 3
+    joints:
+      index_mcp: flex
+  - step: 4
+    joints:
+      index_mcp: extend
+  - step: 5
+    joints:
+      index_pip: flex
+  - step: 6
     joints:
       index_pip: extend
 

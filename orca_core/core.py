@@ -274,7 +274,7 @@ class OrcaHand:
     
         return joint_pos
          
-    def set_joint_pos(self, joint_pos: Union[dict, list], num_steps: int = 1, step_size: float = 1.0):
+    def set_joint_pos(self, joint_pos: Union[dict, list], num_steps: int = 1, step_size: float = 1):
         """Set the desired joint positions. If nun_steps > 1, the hand will move to the target position in a smooth, gradual motion (depending also on step_size).
     
         Args:
@@ -450,7 +450,7 @@ class OrcaHand:
                     self.set_max_current(self.calib_current)
                     
                 motor_id = self.joint_to_motor_map[joint]
-                sign = 1 if direction == 'flex' else -1
+                sign = 1 if direction == 'extend' else -1 # changes to opposite of Orca's default because tendons weren't crossed over
                 if self.joint_inversion_dict.get(joint, False):
                     sign = -sign
                 directions[motor_id] = sign

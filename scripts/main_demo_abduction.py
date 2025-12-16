@@ -3,6 +3,8 @@ import time
 import numpy as np
 import argparse # Added import
 
+
+
 def main(): # Added main function
     parser = argparse.ArgumentParser(
         description="Run a demo of the ORCA Hand with abduction movements. Specify the path to the orcahand model folder."
@@ -26,32 +28,33 @@ def main(): # Added main function
         print("Failed to connect to the hand.")
         exit()
 
+
     # Joint ranges of motion (ROMs)
     joint_roms = {
-        'thumb_mcp': [-50, 50],
-        'thumb_abd': [-20, 42],
-        'thumb_pip': [-12, 108],
-        'thumb_dip': [-20, 112],
+        # 'thumb_mcp': [-50, 50],
+        # 'thumb_abd': [-20, 42],
+        # 'thumb_pip': [-12, 108],
+        # 'thumb_dip': [-20, 112],
         'index_mcp': [-20, 95],
         'index_pip': [-20, 108],
         'index_abd': [-37, 37],
-        'middle_mcp': [-20, 91],
-        'middle_pip': [-20, 107],
-        'ring_mcp': [-20, 91],
-        'ring_pip': [-20, 107],
-        'ring_abd': [-37, 37],
-        'pinky_mcp': [-20, 98],
-        'pinky_pip': [-20, 108],
-        'pinky_abd': [-37, 37],
-        'wrist': [-50, 30],
+        # 'middle_mcp': [-20, 91],
+        # 'middle_pip': [-20, 107],
+        # 'ring_mcp': [-20, 91],
+        # 'ring_pip': [-20, 107],
+        # 'ring_abd': [-37, 37],
+        # 'pinky_mcp': [-20, 98],
+        # 'pinky_pip': [-20, 108],
+        # 'pinky_abd': [-37, 37],
+        # 'wrist': [-50, 30],
     }
 
     # Define the fingers and their joints
     fingers = [
         {'name': 'index', 'joints': ['index_mcp', 'index_pip']},
-        {'name': 'middle', 'joints': ['middle_mcp', 'middle_pip']},
-        {'name': 'ring', 'joints': ['ring_mcp', 'ring_pip']},
-        {'name': 'pinky', 'joints': ['pinky_mcp', 'pinky_pip']},
+        # {'name': 'middle', 'joints': ['middle_mcp', 'middle_pip']},
+        # {'name': 'ring', 'joints': ['ring_mcp', 'ring_pip']},
+        # {'name': 'pinky', 'joints': ['pinky_mcp', 'pinky_pip']},
     ]
 
     # Movement parameters
@@ -80,19 +83,19 @@ def main(): # Added main function
 
         # Compute positions for the thumb
         thumb_pos = {
-            'thumb_mcp': (joint_roms['thumb_mcp'][0] + joint_roms['thumb_mcp'][1]) / 2
-            + thumb_amplitude * (joint_roms['thumb_mcp'][1] - joint_roms['thumb_mcp'][0]) / 2
-            * np.sin(2 * np.pi * t / period),
-            'thumb_pip': (joint_roms['thumb_pip'][0] + joint_roms['thumb_pip'][1]) / 2
-            + thumb_amplitude * (joint_roms['thumb_pip'][1] - joint_roms['thumb_pip'][0]) / 2
-            * np.sin(2 * np.pi * t / period),
-            'thumb_dip': (joint_roms['thumb_dip'][0] + joint_roms['thumb_dip'][1]) / 2
-            + thumb_amplitude * (joint_roms['thumb_dip'][1] - joint_roms['thumb_dip'][0]) / 2
-            * np.sin(2 * np.pi * t / period),
-            'thumb_abd': 35,  # Constant position
-            'wrist': -20,  # Constant position
-            'pinky_abd': -20,  # Constant abduction
-            'ring_abd': -10,   # Constant abduction
+        #     'thumb_mcp': (joint_roms['thumb_mcp'][0] + joint_roms['thumb_mcp'][1]) / 2
+        #     + thumb_amplitude * (joint_roms['thumb_mcp'][1] - joint_roms['thumb_mcp'][0]) / 2
+        #     * np.sin(2 * np.pi * t / period),
+        #     'thumb_pip': (joint_roms['thumb_pip'][0] + joint_roms['thumb_pip'][1]) / 2
+        #     + thumb_amplitude * (joint_roms['thumb_pip'][1] - joint_roms['thumb_pip'][0]) / 2
+        #     * np.sin(2 * np.pi * t / period),
+        #     'thumb_dip': (joint_roms['thumb_dip'][0] + joint_roms['thumb_dip'][1]) / 2
+        #     + thumb_amplitude * (joint_roms['thumb_dip'][1] - joint_roms['thumb_dip'][0]) / 2
+        #     * np.sin(2 * np.pi * t / period),
+        #     'thumb_abd': 35,  # Constant position
+        #     'wrist': -20,  # Constant position
+        #     'pinky_abd': -20,  # Constant abduction
+        #     'ring_abd': -10,   # Constant abduction
             'index_abd': 10, # Constant abduction
         }
         thumb_positions.append(thumb_pos)
@@ -113,7 +116,7 @@ def main(): # Added main function
 
     except KeyboardInterrupt:
         # Reset the hand to the neutral position on exit
-        hand.set_joint_pos({joint: 0 for joint in hand.joint_ids})
+        hand.set_joint_pos({joint: 0 for joint in hand.joint_ids}, num_steps=25, step_size=0.005)
         print("Demo stopped and hand reset.")
 
 if __name__ == "__main__": # Added main execution block

@@ -4,9 +4,9 @@ import argparse # Added import
 
 def main(): # Added main function
     parser = argparse.ArgumentParser(description="Check a motor connected to the Dynamixel client.")
-    parser.add_argument("--port", type=str, default="/dev/tty.usbserial-FT9MISJT", help="The port to connect to the Dynamixel client.")
-    parser.add_argument("--baudrate", type=int, default=3000000, help="The baudrate for the Dynamixel client.")
-    parser.add_argument("--motor_id", type=int, default=2, help="The ID of the motor to check.")
+    parser.add_argument("--port", type=str, default="/dev/ttyUSB0", help="The port to connect to the Dynamixel client.")
+    parser.add_argument("--baudrate", type=int, default=57600, help="The baudrate for the Dynamixel client.")
+    parser.add_argument("--motor_id", type=int, default=16, help="The ID of the motor to check.")
     parser.add_argument("--wrist", action="store_true", help="Set if checking a wrist motor (uses position control mode 3).")
     parser.add_argument("--reverse", action="store_true", help="If set, subtracts 0.1 from position, otherwise adds 0.1.")
     
